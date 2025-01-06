@@ -25,5 +25,10 @@ Ensure the following dependencies are installed:
 
 Install the required packages using npm:
 
-```bash
 npm install
+
+### Run the project
+
+In the root of the project run the following command:
+
+dredd
