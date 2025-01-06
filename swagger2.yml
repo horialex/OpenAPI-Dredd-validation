@@ -1,0 +1,80 @@
+swagger: '2.0'
+info:
+  description: API for retrieving product details.
+  title: Product API
+  version: 1.0.0
+host: 'localhost:3000'
+basePath: /
+schemes:
+  - http
+paths:
+  /products:
+    get:
+      produces:
+        - application/json; charset=utf-8
+      parameters: []
+      responses:
+        '200':
+          description: A list of products.
+          schema:
+            items:
+              $ref: '#/definitions/Product'
+            type: array
+      description: Retrieve a list of all available products.
+      summary: Get all products
+  '/products/{id}':
+    get:
+      produces:
+        - application/json; charset=utf-8
+      parameters:
+        - description: The ID of the product.
+          enum:
+            - 1
+            - 2
+          in: path
+          name: id
+          required: true
+          type: integer
+      responses:
+        '200':
+          description: The product details.
+          schema:
+            $ref: '#/definitions/Product'
+      description: Retrieve a product by its unique ID.
+      summary: Get product by ID
+definitions:
+  Product:
+    additionalProperties: false
+    properties:
+      categories:
+        description: List of categories the product belongs to.
+        items:
+          type: string
+        type: array
+      description:
+        description: Brief description of the product.
+        type: string
+      id:
+        description: Unique identifier for the product.
+        type: integer
+      inStock:
+        description: Indicates if the product is in stock.
+        type: boolean
+      name:
+        description: Name of the product.
+        type: string
+      price:
+        description: Price of the product.
+        type: number
+      ratings:
+        description: Average customer rating for the product.
+        type: number
+    required:
+      - id
+      - name
+      - price
+      - inStock
+      - categories
+      - ratings
+    type: object
+x-components: {}

@@ -1,0 +1,74 @@
+openapi: 3.0.0
+info:
+  title: Product API
+  description: API for retrieving product details.
+  version: 1.0.0
+servers:
+  - url: http://localhost:3000
+    description: Local server
+
+paths:
+  /products:
+    get:
+      summary: Get all products
+      description: Retrieve a list of all available products.
+      responses:
+        '200':
+          description: A list of products.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Product'
+
+  /products/{id}:
+    get:
+      summary: Get product by ID
+      description: Retrieve a product by its unique ID.
+      parameters:
+        - name: id
+          in: path
+          description: The ID of the product.
+          required: true
+          schema:
+            type: integer
+            enum: [1, 2]
+      responses:
+        '200':
+          description: The product details.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Product'
+
+components:
+  schemas:
+    Product:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: Unique identifier for the product.
+        name:
+          type: string
+          description: Name of the product.
+        description:
+          type: string
+          description: Brief description of the product.
+        price:
+          type: number
+          format: float
+          description: Price of the product.
+        inStock:
+          type: boolean
+          description: Indicates if the product is in stock.
+        categories:
+          type: array
+          items:
+            type: string
+          description: List of categories the product belongs to.
+        ratings:
+          type: number
+          format: float
+          description: Average customer rating for the product.
