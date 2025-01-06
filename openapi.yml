@@ -1,7 +1,7 @@
 openapi: 3.0.0
 info:
   title: Product API
-  description: API for retrieving product details.
+  description: API for retrieving and managing product details.
   version: 1.0.0
 servers:
   - url: http://localhost:3000
@@ -21,6 +21,64 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/Product'
+
+    post:
+      summary: Create a new product
+      description: Add a new product to the system.
+      requestBody:
+        description: Product object to be created.
+        required: true
+        content:
+          application/json:
+            schema:
+              properties:
+                name:
+                  description: 'The name of the product'
+                  type: string
+                  example: "New Product"
+                description:
+                  description: 'the descriptiuon of the product'
+                  type: string
+                  example: "Dummy description"
+                price:
+                  description: 'product price'
+                  type: number
+                  example: 99.99
+                inStock:
+                  description: 'Tells you if the product is in stock or not'
+                  type: boolean
+                  example: true
+                categories:
+                  description: 'Product categories'
+                  type: array
+                  example:
+                    - Category 1
+                    - Category 2
+                ratings:
+                  description: "Product rating"
+                  type: number
+                  example: 4.2      
+              required:
+                - name
+                - description
+                - price
+                - inStock
+                - categories
+                - ratings
+              type: object
+      responses:
+        '201':
+          description: Product created successfully.
+          content:
+            application/json; charset=utf-8:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "Product created successfully"
+                  product:
+                    $ref: '#/components/schemas/Product'
 
   /products/{id}:
     get:
@@ -73,6 +131,7 @@ components:
       required:
         - id
         - name
+        - description
         - price
         - inStock
         - categories

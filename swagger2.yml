@@ -1,6 +1,6 @@
 swagger: '2.0'
 info:
-  description: API for retrieving product details.
+  description: API for retrieving and managing product details.
   title: Product API
   version: 1.0.0
 host: 'localhost:3000'
@@ -22,6 +22,65 @@ paths:
             type: array
       description: Retrieve a list of all available products.
       summary: Get all products
+    post:
+      consumes:
+        - application/json
+      produces:
+        - application/json; charset=utf-8
+      parameters:
+        - description: Product object to be created.
+          in: body
+          name: body
+          required: true
+          schema:
+            properties:
+              categories:
+                description: Product categories
+                example:
+                  - Category 1
+                  - Category 2
+                type: array
+              description:
+                description: the descriptiuon of the product
+                example: Dummy description
+                type: string
+              inStock:
+                description: Tells you if the product is in stock or not
+                example: true
+                type: boolean
+              name:
+                description: The name of the product
+                example: New Product
+                type: string
+              price:
+                description: product price
+                example: 99.99
+                type: number
+              ratings:
+                description: Product rating
+                example: 4.2
+                type: number
+            required:
+              - name
+              - description
+              - price
+              - inStock
+              - categories
+              - ratings
+            type: object
+      responses:
+        '201':
+          description: Product created successfully.
+          schema:
+            properties:
+              message:
+                example: Product created successfully
+                type: string
+              product:
+                $ref: '#/definitions/Product'
+            type: object
+      description: Add a new product to the system.
+      summary: Create a new product
   '/products/{id}':
     get:
       produces:
@@ -72,6 +131,7 @@ definitions:
     required:
       - id
       - name
+      - description
       - price
       - inStock
       - categories
