@@ -94,29 +94,5 @@
       "Category 2"
     ],
     "ratings": 4.2
-  },
-  {
-    "id": 9,
-    "name": "New Product",
-    "description": "Dummy description",
-    "price": 99.99,
-    "inStock": true,
-    "categories": [
-      "Category 1",
-      "Category 2"
-    ],
-    "ratings": 4.2
-  },
-  {
-    "id": 10,
-    "name": "New Product",
-    "description": "Dummy description",
-    "price": 99.99,
-    "inStock": true,
-    "categories": [
-      "Category 1",
-      "Category 2"
-    ],
-    "ratings": 4.2
   }
 ]

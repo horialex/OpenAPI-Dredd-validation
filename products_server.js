@@ -1,3 +1,4 @@
+const { error } = require('console');
 const express = require('express');
 const fs = require('fs');
 const path = require('path');
@@ -56,35 +57,27 @@ app.get('/products/:id', (req, res) => {
 app.post('/products', (req, res) => {
     try {
         const newProduct = req.body;
-
-        // Read current products
         const products = readProductsFromFile();
 
         // Validate new product data
         if (!newProduct.name) {
             return res.status(400).json({ message: "The 'name' field is required." });
         }
-
         if (!newProduct.description) {
             return res.status(400).json({ message: "The 'description' field is required." });
         }
-
         if (!newProduct.price) {
             return res.status(400).json({ message: "The 'price' field is required." });
         }
-
         if (typeof newProduct.inStock !== 'boolean') {
             return res.status(400).json({ message: "The 'inStock' field must be a boolean." });
         }
-
         if (!newProduct.categories || !Array.isArray(newProduct.categories) || newProduct.categories.length === 0) {
             return res.status(400).json({ message: "The 'categories' field must be a non-empty array." });
         }
-
         if (!newProduct.ratings) {
             return res.status(400).json({ message: "The 'ratings' field is required." });
         }
-
 
         // Assign a new ID
         const newId = products.length > 0 ? Math.max(...products.map(p => p.id)) + 1 : 1;
@@ -100,10 +93,7 @@ app.post('/products', (req, res) => {
             ratings: newProduct.ratings
         };
 
-        // Add new product to the list
         products.push(orderedProduct);
-
-        // Save updated products to the file
         writeProductsToFile(products);
 
         res.status(201).json({ message: "Product created successfully", product: orderedProduct });
@@ -113,6 +103,51 @@ app.post('/products', (req, res) => {
     }
 });
 
+app.put('/products', (req, res) => {
+    try {
+        const { id: productId, name: updatedName } = req.body;
+        if (!productId || !updatedName) {
+            return res.status(400).json({ message: "Missing required fields (id and name)" });
+        }
+        const products = readProductsFromFile();
+        const product = products.find(p => p.id === productId);
+
+        if (product) {
+            product.name = updatedName;
+            writeProductsToFile(products);
+
+            res.status(200).json({ message: "Product updated successfully" });
+        } else {
+            res.status(404).json({ message: "Product not found" });
+        }
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ message: "Error updating the product" });
+    }
+});
+
+app.delete("/products", (req, res) => {
+    try {
+        const productId = req.body.id
+        if (!productId) {
+            return res.status(400).json({ message: "Missing required field (id)" });
+        }
+
+        const products = readProductsFromFile();
+        const updatedProducts = products.filter(p => p.id !== productId);
+
+        if (products.length === updatedProducts.length) {
+            return res.status(404).json({ message: "Product not found" });
+        }
+
+        writeProductsToFile(updatedProducts);
+
+        res.status(200).json({ message: "Product removed successfully" });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ message: "Error removing the product" });
+    }
+});
 
 // Middleware for setting JSON response headers
 app.use((req, res, next) => {

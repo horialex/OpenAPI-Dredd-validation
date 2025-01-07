@@ -1,10 +1,14 @@
 # API Validation with Dredd
 
 This project uses Dredd for API contract validation based on the Swagger 2.0 specification, which is generated from an OpenAPI 3.0 specification using the `@api-spec-converter` library.
+I am using **Express** as a backeend server for this example
 
 I have careated a dummy API with 2 GET endpoints that read the data from a json file 
-   1. GET products
-   2. GET product/{id}
+   1. GET /products
+   2. GET /products/{id}
+   3. POST /products
+   4. PUT /products
+   5. DELETE /products
 
 The goal is to validate the response of these endpoints that are according to the OpenAPI spec file using Dredd.
 
@@ -103,3 +107,27 @@ curl -X POST http://localhost:3000/products \
     "categories": ["Category1", "Category2"],
     "ratings": 4.2
 }'
+```
+
+### 4. PUT `/product`
+Updates a product based on id
+```bash
+curl -X PUT http://localhost:3000/products \
+-H "Content-Type: application/json" \
+-d '{
+  "id": 10,
+  "name": "Hori Product"
+}'
+
+```
+
+### 5. DELETE `/products`
+Removes a product based on id
+
+```bash
+curl -X DELETE http://localhost:3000/products \
+-H "Content-Type: application/json" \
+-d '{
+  "id": 10
+}'
+```
