@@ -10,8 +10,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start:server": "node app.js",
-    "start:products:server": "node products_server.js",
+    "start:server": "node products_server.js",
     "convert:openapi": "node spec_converter.js"
   },
   "author": "",

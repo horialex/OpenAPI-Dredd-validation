@@ -3,7 +3,7 @@ dry-run: null
 hookfiles: ./hooks/before.js
 language: nodejs
 require: null
-server: npm run start:products:server
+server: npm run start:server
 server-wait: 3
 init: false
 custom: {}

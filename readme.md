@@ -131,3 +131,12 @@ curl -X DELETE http://localhost:3000/products \
   "id": 10
 }'
 ```
+
+
+# Commands to Test the setup:
+
+1. **npm install -y**  to install all the dependencies
+2. **npm run convert:openapi**  to convert the OpenaAPI 3.0 document to Swagger 2.0
+3. **npm run start:server**  to start the CRUD Products server - not needed if you run the dredd command since that will 
+                              also start the server
+4. **dredd**  to run the dredd API contract tests                          
