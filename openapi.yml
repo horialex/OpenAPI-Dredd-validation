@@ -78,8 +78,66 @@ paths:
                     type: string
                     example: "Product created successfully"
                   product:
-                    $ref: '#/components/schemas/Product'
-
+                    $ref: '#/components/schemas/Product'           
+    put:
+      summary: Update product name by ID
+      description: Update product name using product ID.
+      requestBody:
+        description: Product details to be updated, including ID and name.
+        required: true
+        content:
+          application/json:
+            schema:
+              properties:
+                id:
+                  type: integer
+                  description: 'The unique ID of the product to update.'
+                  example: 1
+                name:
+                  type: string
+                  description: 'The new name for the product.'
+                  example: Updated Product Name
+              required:
+                - id
+                - name
+      responses:
+        '200':
+          description: Product updated successfully.
+          content:
+            application/json; charset=utf-8:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "Product updated successfully"
+    delete:
+      summary: Delete product by ID
+      description: Delete a product using its unique ID.
+      requestBody:
+        description: The ID of the product to be deleted.
+        required: true
+        content:
+          application/json:
+            schema:
+              properties:
+                id:
+                  type: integer
+                  description: 'The unique ID of the product to delete.'
+                  example: 8
+              required:
+                - id
+      responses:
+        '200':
+          description: Product deleted successfully.
+          content:
+            application/json; charset=utf-8:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "Product removed successfully"
   /products/{id}:
     get:
       summary: Get product by ID

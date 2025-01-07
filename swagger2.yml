@@ -9,6 +9,35 @@ schemes:
   - http
 paths:
   /products:
+    delete:
+      consumes:
+        - application/json
+      produces:
+        - application/json; charset=utf-8
+      parameters:
+        - description: The ID of the product to be deleted.
+          in: body
+          name: body
+          required: true
+          schema:
+            properties:
+              id:
+                description: The unique ID of the product to delete.
+                example: 8
+                type: integer
+            required:
+              - id
+      responses:
+        '200':
+          description: Product deleted successfully.
+          schema:
+            properties:
+              message:
+                example: Product removed successfully
+                type: string
+            type: object
+      description: Delete a product using its unique ID.
+      summary: Delete product by ID
     get:
       produces:
         - application/json; charset=utf-8
@@ -81,6 +110,40 @@ paths:
             type: object
       description: Add a new product to the system.
       summary: Create a new product
+    put:
+      consumes:
+        - application/json
+      produces:
+        - application/json; charset=utf-8
+      parameters:
+        - description: 'Product details to be updated, including ID and name.'
+          in: body
+          name: body
+          required: true
+          schema:
+            properties:
+              id:
+                description: The unique ID of the product to update.
+                example: 1
+                type: integer
+              name:
+                description: The new name for the product.
+                example: Updated Product Name
+                type: string
+            required:
+              - id
+              - name
+      responses:
+        '200':
+          description: Product updated successfully.
+          schema:
+            properties:
+              message:
+                example: Product updated successfully
+                type: string
+            type: object
+      description: Update product name using product ID.
+      summary: Update product name by ID
   '/products/{id}':
     get:
       produces:
