@@ -26,6 +26,7 @@ const writeProductsToFile = (products) => {
 // GET endpoint to retrieve the list of products
 app.get('/products', (req, res) => {
     try {
+        console.log("Calling GET '/products' API")
         const products = readProductsFromFile();
         res.setHeader('Content-Type', 'application/json');
         res.json(products);

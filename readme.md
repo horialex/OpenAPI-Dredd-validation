@@ -47,6 +47,11 @@ This API allows you to manage a list of products. You can retrieve, create, and 
 ### 1. GET `/products`
 Retrieves a list of all products.
 
+
+```
+curl -X GET http://localhost:3000/products
+
+```
 ### 2. GET `/products/:id`
 Retrieves a specific product by its ID.
 
